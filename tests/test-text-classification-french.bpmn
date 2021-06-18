@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1ywnfzr" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Zeebe Modeler" exporterVersion="0.10.0">
+  <bpmn:process id="test-text-classfication-french" name="Test Text Classification French" isExecutable="true">
+    <bpmn:startEvent id="start" name="Start">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=&#34;Qui est Napoléon ?&#34;" target="sequence" />
+          <zeebe:output source="=[&#34;politique&#34;, &#34;histoire&#34;, &#34;education&#34;]" target="candidate_labels" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_1pvr7gm</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1pvr7gm" sourceRef="start" targetRef="zero-shot-classification-french" />
+    <bpmn:endEvent id="end" name="End">
+      <bpmn:incoming>Flow_0t7m2qk</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0t7m2qk" sourceRef="zero-shot-classification-french" targetRef="end" />
+    <bpmn:serviceTask id="zero-shot-classification-french" name="Zero Shot Classification French">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="text-classification-fr" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1pvr7gm</bpmn:incoming>
+      <bpmn:outgoing>Flow_0t7m2qk</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="test-text-classfication-french">
+      <bpmndi:BPMNEdge id="Flow_1pvr7gm_di" bpmnElement="Flow_1pvr7gm">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="260" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0t7m2qk_di" bpmnElement="Flow_0t7m2qk">
+        <di:waypoint x="360" y="117" />
+        <di:waypoint x="402" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="start">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="185" y="142" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1x1bkxm_di" bpmnElement="end">
+        <dc:Bounds x="402" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="410" y="142" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_18gb3ea_di" bpmnElement="zero-shot-classification-french">
+        <dc:Bounds x="260" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
