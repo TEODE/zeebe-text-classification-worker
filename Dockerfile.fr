@@ -1,0 +1,20 @@
+FROM python:3.7.10-slim
+
+ENV LOGGING_LEVEL 20
+
+ENV TASK_NAME text-classification-fr
+ENV MODEL models/camembert-base-xnli
+ENV HYPOTHESIS_TEMPLATE "Ce texte parle de {}."
+ENV TIMEOUT 30000
+ENV MAX_JOBS_TO_ACTIVATE 1
+ENV MAX_CONNECTION_RETRIES 1
+
+WORKDIR /usr/src/app 
+
+COPY requirements.txt index.py ./
+COPY libs ./libs/
+COPY models/camembert-base-xnli ./models/camembert-base-xnli
+
+RUN pip install -r requirements.txt
+
+CMD ["python", "index.py"]
