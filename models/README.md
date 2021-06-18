@@ -1,0 +1,1 @@
+Download some [models](https://huggingface.co/models?pipeline_tag=zero-shot-classification) in this folder
